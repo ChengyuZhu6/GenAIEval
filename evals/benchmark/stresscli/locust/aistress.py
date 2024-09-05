@@ -73,21 +73,25 @@ class AiStressUser(HttpUser):
             self.environment.runner.send_message("worker_reqsent", 1)
         reqData = bench_package.getReqData()
         url = bench_package.getUrl()
+        logging.debug(f"!!!!!!!!reqData = {reqData}")
+        stream=False
         try:
             start_ts = time.perf_counter()
             with self.client.post(
                 url,
                 json=reqData,
-                stream=True,
+                stream=stream,
                 catch_response=True,
                 timeout=self.environment.parsed_options.http_timeout,
             ) as resp:
                 logging.debug("Got response...........................")
-
+                logging.debug(f"!!!!!!!!resp = {resp}")
+                logging.debug(f"!!!!!!!!resp.text = {resp.text}")                    
                 if resp.status_code >= 200 and resp.status_code < 400:
                     if self.environment.parsed_options.bench_target in [
                         "audioqnafixed",
                         "audioqnabench",
+                        "finragbench",
                     ]:  # non-stream case
                         respData = {
                             "response_string": resp.text,

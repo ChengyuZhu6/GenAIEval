@@ -2,20 +2,50 @@
 # SPDX-License-Identifier: Apache-2.0
 
 test_suite_config: # Overall configuration settings for the test suite
-  examples: ["chatqna"]  # The specific test cases being tested, e.g., chatqna, codegen, codetrans, faqgen, audioqna, visualqna
+  examples: ["finrag"]  # The specific test cases being tested, e.g., chatqna, codegen, codetrans, faqgen, audioqna, visualqna
   deployment_type: "k8s"  # Default is "k8s", can also be "docker"
   service_ip: None  # Leave as None for k8s, specify for Docker
   service_port: None  # Leave as None for k8s, specify for Docker
   concurrent_level: 4  # The concurrency level, adjustable based on requirements
-  user_queries: [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048]  # Number of test requests at each concurrency level
-  random_prompt: false  # Use random prompts if true, fixed prompts if false
-  run_time: 60m  # The max total run time for the test suite
-  collect_service_metric: false  # Collect service metrics if true, do not collect service metrics if false
-  data_visualization: false # Generate data visualization if true, do not generate data visualization if false
-  llm_model: "Intel/neural-chat-7b-v3-3"  # The LLM model used for the test
-  test_output_dir: "/home/sdp/benchmark_output"  # The directory to store the test output
+  user_queries: [1, 2, 4, 8, 16, 32, 64]  # Number of test requests at each concurrency level
+  # user_queries: [1]
+  random_prompt: true  # Use random prompts if true, fixed prompts if false
+  run_time: 3m  # The max total run time for the test suite
+  collect_service_metric: true  # Collect service metrics if true, do not collect service metrics if false
+  data_visualization: true # Generate data visualization if true, do not generate data visualization if false
+  llm_model: "/home/work/FinRAG/LLM/chatglm2-6b"  # The LLM model used for the test
+  test_output_dir: "/home/zcy/benchmark_output"  # The directory to store the test output
 
 test_cases:
+  finrag:
+    router:
+      run_test: false
+      service_name: "finrag-router"  # Replace with your service name
+    router-usvc:
+      run_test: false
+      service_name: "finrag-router-usvc"  # Replace with your service name
+    nl2sql:
+      run_test: false
+      service_name: "finrag-nl2sql"  # Replace with your service name
+    nl2sql-usvc:
+      run_test: false
+      service_name: "finrag-nl2sql-usvc"  # Replace with your service name
+    normalize:
+      run_test: false
+      service_name: "finrag-normalize"  # Replace with your service name
+    normalize-usvc:
+      run_test: false
+      service_name: "finrag-normalize-usvc"  # Replace with your service name
+    doctree:
+      run_test: false
+      service_name: "finrag-doctree"  # Replace with your service name
+    vllm:
+      run_test: false
+      service_name: "finrag-vllm"  # Replace with your service name
+    e2e:
+      run_test: true
+      service_name: "finqna"  # Replace with your service name
+
   chatqna:
     embedding:
       run_test: false

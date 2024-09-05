@@ -147,7 +147,7 @@ def run_locust_test(kubeconfig, global_settings, run_settings, output_folder, in
         "--headless",
         "--only-summary",
         "--loglevel",
-        "WARNING",
+        "INFO",
         "--json",
     ]
 

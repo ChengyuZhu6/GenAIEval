@@ -14,11 +14,15 @@ def testFunc():
 
 
 def respStatics(environment, req, resp):
-    tokenizer = transformers.AutoTokenizer.from_pretrained(environment.parsed_options.llm_model)
+    tokenizer = transformers.AutoTokenizer.from_pretrained(environment.parsed_options.llm_model, trust_remote_code=True)
+    logging.debug(f"!!!!!!!!!req: {req}")
+    logging.debug(f"!!!!!!!!!resp: {resp}")
     if environment.parsed_options.bench_target in ["chatqnafixed", "chatqnabench"]:
         num_token_input_prompt = len(tokenizer.encode(req["messages"]))
     elif environment.parsed_options.bench_target in ["llmfixed"]:
         num_token_input_prompt = len(tokenizer.encode(req["query"]))
+    elif environment.parsed_options.bench_target in ["finragbench"]:
+        num_token_input_prompt = len(tokenizer.encode(req["messages"]))
     else:
         num_token_input_prompt = -1
 

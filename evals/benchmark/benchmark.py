@@ -9,6 +9,17 @@ from stresscli.commands.load_test import locust_runtests
 from utils import get_service_cluster_ip, load_yaml
 
 service_endpoints = {
+    "finrag":{
+        "finrag-router": "/v1/chat/completions",
+        "finrag-router-usvc": "/v1/chat/completions",
+        "finrag-nl2sql": "/v1/chat/completions",
+        "finrag-nl2sql-usvc": "/v1/chat/completions",
+        "finrag-normalize": "/v1/chat/completions",
+        "finrag-normalize-usvc": "/v1/chat/completions",
+        "finrag-doctree": "/v1/chat/completions",
+        "finrag-vllm": "/v1/chat/completions",
+        "e2e": "/v1/finqna",
+    },
     "chatqna": {
         "embedding": "/v1/embeddings",
         "embedding_serving": "/v1/embeddings",
@@ -194,6 +205,17 @@ if __name__ == "__main__":
 
     # Mapping of example names to service types
     example_service_map = {
+        "finrag": [
+            "finrag-router",
+            "finrag-router-usvc",
+            "finrag-nl2sql",
+            "finrag-nl2sql-usvc",
+            "finrag-normalize",
+            "finrag-normalize-usvc",
+            "finrag-doctree",
+            "finrag-vllm",
+            "e2e",
+        ],
         "chatqna": [
             "embedding",
             "embedding_serving",
